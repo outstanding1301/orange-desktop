@@ -1,0 +1,71 @@
+{
+  "name": "orange",
+  "version": "2.1.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "npm run build:osx && npm run build:win",
+    "build:osx": "electron-builder --mac",
+    "build:win": "npm run build:win32 && npm run build:win64",
+    "build:win32": "electron-builder --win --ia32",
+    "build:win64": "electron-builder --win --x64"
+  },
+  "build": {
+    "productName": "Orange",
+    "appId": "com.outstandingboy.orange",
+    "asar": true,
+    "protocols": {
+      "name": "Orange",
+      "schemes": [
+        "orange"
+      ]
+    },
+    "mac": {
+      "target": [
+        "default"
+      ],
+      "icon": "./assets/icons/mac/orange.icns"
+    },
+    "dmg": {
+      "title": "Orange",
+      "icon": "./assets/icons/mac/orange.icns"
+    },
+    "win": {
+      "target": [
+        "zip",
+        "nsis"
+      ],
+      "icon": "./assets/icons/png/orange.png"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "zip",
+        "tar.gz"
+      ],
+      "icon": "./assets/icons/png/orange.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createStartMenuShortcut": true
+    },
+    "directories": {
+      "buildResources": "resources/installer/",
+      "output": "dist/",
+      "app": "."
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^8.2.0",
+    "electron-builder": "^22.4.1"
+  },
+  "dependencies": {
+    "ejs-electron": "^2.0.3"
+  }
+}

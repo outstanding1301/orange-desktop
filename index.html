@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>오렌지 다몸</title>
+        <style>
+            * {
+                margin:0px;
+                height:0px;
+                font-size: 0;
+            }
+            * {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+            }
+            *::-webkit-scrollbar { 
+            display: none; /* Chrome, Safari, Opera*/
+            }
+            body {
+                overflow: hidden;
+            }
+            webview {
+                display:inline-flex;
+                margin:0px;
+                padding:0px;
+            }
+            webview.hide {
+                flex: 0 1;
+                width: 0px;
+                height: 0px;
+            }
+            .titleBar {
+                position: relative;
+                background-color: #ffad6b;
+                width:100vw;
+                height:25px;
+                -webkit-app-region: drag;
+                /* background-color: #5c88ff; */
+                -ms-user-select: none; 
+                -moz-user-select: -moz-none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
+                cursor: default;
+                text-align: center;
+            }
+            .btn {
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                padding: 0;
+                margin: 0;
+                border: 1px solid #1d1d1d9c;
+                margin-left: 5px;
+                border-radius: 30px;
+                z-index: 10;
+                -webkit-app-region: no-drag;
+            }
+            .close {
+                background-color: #ff5252;
+            }
+            .close:hover {
+                background-color: #ffb7b7;
+            }
+            .minimize {
+                background-color: #ffd752;
+            }
+            .minimize:hover {
+                background-color: #fff4d1;
+            }
+            .maximize {
+                background-color: #6fff52;
+            }
+            .maximize:hover {
+                background-color: #daffd3;
+            }
+            .refresh {
+                background-color: #5297ff;
+            }
+            .refresh:hover {
+                background-color: #b6d3ff;
+            }
+
+            .home {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                background-color: #b152ff;
+            }
+            .home:hover {
+                background-color: #d8a8ff;
+            }
+            
+            .tools {
+                position: absolute;
+                top: 5px;
+                left: 5px;
+            }
+
+            .title {
+                display: inline-block;
+                font-size: 15px;
+                margin: 0px;
+                padding: 0px;
+                margin-top: 5px;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="titleBar">
+            <div class="tools">
+                <button class="btn close" onclick="onClose()">X</button>
+                <button class="btn minimize" onclick="onMinimize()">-</button>
+                <button class="btn maximize" onclick="onMaximize()">_</button>
+                <button class="btn refresh" onclick="onRefresh()">r</button>
+            </div>
+            <button class="btn home" onclick="home()">r</button>
+            <p class="title">오렌지 다몸</p>
+        </div>
+        <webview id="wv" nodeintegration style="display:inline-flex; width:100vw; height:100vh"></webview>
+        <script>
+            const {ipcRenderer, remote} = require('electron');
+            const qs = decodeURIComponent(global.location.search);
+            const url = qs.split('url=')[1];
+
+            const webview = document.getElementById('wv');
+
+            webview.src = url;
+
+            ipcRenderer.on('refresh', (e, args) => {
+                onRefresh();
+            })
+
+            // document.addEventListener('keydown', (e) => {
+            //     if(e.ctrlKey && e.key == 'q') {
+            //         const window = remote.getCurrentWindow();
+            //         window.close();
+            //     }
+            // }, false);
+
+            webview.addEventListener("dom-ready", event => {
+                webview.blur();
+                webview.focus();
+            });
+
+            function home() {
+                ipcRenderer.send('home', '');
+            }
+
+            function onClose() {
+                const window = remote.getCurrentWindow();
+                window.close();
+            }
+            function onMinimize() {
+                const window = remote.getCurrentWindow();
+                window.minimize();
+            }
+            function onMaximize() {
+                const window = remote.getCurrentWindow();
+                if(!window.isMaximized())
+                    window.maximize();
+                else
+                    window.unmaximize();
+            }
+            function onRefresh() {
+                // const window = remote.getCurrentWindow();
+                // window.reload();
+                webview.reload();
+            }
+        </script>
+    </body>
+</html>
