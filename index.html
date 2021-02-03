@@ -17,6 +17,8 @@
             display: none; /* Chrome, Safari, Opera*/
             }
             body {
+                width: 100vw;
+                height: calc(100vh - 25px);
                 overflow: hidden;
             }
             webview {
@@ -118,7 +120,7 @@
             <button class="btn home" onclick="home()">r</button>
             <p class="title">오렌지 다몸</p>
         </div>
-        <webview id="wv" nodeintegration style="display:inline-flex; width:100vw; height:100vh"></webview>
+        <webview id="wv" nodeintegration style="display:inline-flex; width:100%; height:100%"></webview>
         <script>
             const {ipcRenderer, remote} = require('electron');
             const qs = decodeURIComponent(global.location.search);

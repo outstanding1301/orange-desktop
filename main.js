@@ -20,7 +20,7 @@ var createWindow = function () {
     // win.webContents.openDevTools()
     mainWindow.removeMenu();
     mainWindow.loadFile('index.html', { query: {
-            'url': 'https://nocorona.kr'
+            'url': 'https://outstanding1301.github.io/orange/'
         } });
     // win.webContents.on('new-window', (event, url) => {
     //     event.preventDefault();
@@ -45,7 +45,7 @@ app.on('ready', function () {
         var win = new Electron.BrowserWindow({
             width: 480,
             height: 660,
-            title: "Orange",
+            title: "글자 수 세기",
             webPreferences: {
                 nodeIntegration: true,
                 webviewTag: true
@@ -58,6 +58,23 @@ app.on('ready', function () {
                 'url': 'https://outstanding1301.github.io/text-length-bytes/'
             } });
     };
+    var openTag = function () {
+        var win = new Electron.BrowserWindow({
+            width: 500,
+            height: 660,
+            title: "태그 생성",
+            webPreferences: {
+                nodeIntegration: true,
+                webviewTag: true
+            },
+            frame: false,
+            icon: path.join(__dirname, 'assets/icons/png/orange.png')
+        });
+        win.removeMenu();
+        win.loadFile('index.html', { query: {
+                'url': 'https://outstanding1301.github.io/tag-gen/'
+            } });
+    };
     var openNew = function () {
         if (mainWindow.isDestroyed()) {
             createWindow();
@@ -65,6 +82,8 @@ app.on('ready', function () {
         else
             mainWindow.focus();
     };
+    Electron.globalShortcut.register('Alt+Shift+2', openTag);
+    Electron.globalShortcut.register('CommandOrControl+Shift+2', openTag);
     Electron.globalShortcut.register('Alt+Shift+1', openCount);
     Electron.globalShortcut.register('CommandOrControl+Shift+1', openCount);
     Electron.globalShortcut.register('Alt+Shift+`', openNew);
@@ -101,7 +120,7 @@ app.on('web-contents-created', function (e, contents) {
                     var win_1 = new Electron.BrowserWindow({
                         width: 480,
                         height: 660,
-                        title: "Orange",
+                        title: "글자 수 세기",
                         webPreferences: {
                             nodeIntegration: true,
                             webviewTag: true
@@ -112,6 +131,42 @@ app.on('web-contents-created', function (e, contents) {
                     win_1.removeMenu();
                     win_1.loadFile('index.html', { query: {
                             'url': url
+                        } });
+                    return;
+                }
+                else if (url.includes('skynet')) {
+                    var win_2 = new Electron.BrowserWindow({
+                        width: 1380,
+                        height: 840,
+                        title: "Skynet",
+                        webPreferences: {
+                            nodeIntegration: true,
+                            webviewTag: true
+                        },
+                        frame: false,
+                        icon: path.join(__dirname, 'assets/icons/png/orange.png')
+                    });
+                    win_2.removeMenu();
+                    win_2.loadFile('index.html', { query: {
+                            'url': url
+                        } });
+                    return;
+                }
+                else if (url.includes('tag-gen')) {
+                    var win_3 = new Electron.BrowserWindow({
+                        width: 500,
+                        height: 660,
+                        title: "태그 생성",
+                        webPreferences: {
+                            nodeIntegration: true,
+                            webviewTag: true
+                        },
+                        frame: false,
+                        icon: path.join(__dirname, 'assets/icons/png/orange.png')
+                    });
+                    win_3.removeMenu();
+                    win_3.loadFile('index.html', { query: {
+                            'url': 'https://outstanding1301.github.io/tag-gen/'
                         } });
                     return;
                 }
